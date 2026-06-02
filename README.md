@@ -1,295 +1,435 @@
 # Memory Utility Networks (MUN)
 
-<div align="center">
+### *An Empirical Investigation of Utility-Based Memory Retrieval for AI Systems*
 
-### An Empirical Investigation of Utility-Based Memory Retrieval for In-Context Learning and Decision Making
+[![Research Status](https://img.shields.io/badge/Status-Completed-green)](https://github.com)
+[![Phase](https://img.shields.io/badge/Phase-13C.9%20Final-blue)](https://github.com)
+[![Python](https://img.shields.io/badge/Python-3.10%2B-blue)](https://python.org)
+[![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
+[![Reproducible](https://img.shields.io/badge/Reproducible-Yes-brightgreen)](https://github.com)
+[![Audited](https://img.shields.io/badge/Audited-7%20Phases-orange)](docs/)
 
-[![Status](https://img.shields.io/badge/Status-Research%20Complete-success.svg)]()
-[![Python](https://img.shields.io/badge/Python-3.10+-green.svg)]()
-[![Research](https://img.shields.io/badge/Type-Research-red.svg)]()
-
-</div>
-
----
-
-## Overview
-
-Memory Utility Networks (MUN) is a research framework that investigates whether intelligent systems can learn to retrieve memories based on estimated future usefulness rather than relying solely on traditional retrieval strategies such as similarity, recency, or random selection.
-
-The central research question explored in this project is:
-
-> Can utility-based memory retrieval outperform heuristic memory selection strategies in downstream prediction tasks?
-
-To answer this question, MUN was developed as a complete experimental framework including memory retrieval algorithms, baseline comparisons, ablation studies, leakage audits, reproducibility analysis, and utility-based selection mechanisms.
+**Author**: Sree Dharshan G J — SRM Institute of Science and Technology
+**Status**: Research complete. Negative results documented. Artifacts archived.
 
 ---
 
-## Research Motivation
+## Abstract
 
-Most memory retrieval systems assume that the most similar or most recent memory is also the most useful.
+Memory retrieval is a foundational capability of intelligent systems. Whether in retrieval-augmented generation (RAG), few-shot in-context learning, or long-horizon agent reasoning, a system's ability to surface the *right* memory at the *right* time is critical to downstream performance. Current retrieval methods—cosine similarity, recency, access frequency—are principled but fundamentally reactive: they score memories by what they *have been*, not by what they *will be worth* when retrieved.
 
-However, in many real-world scenarios:
+This repository documents a complete empirical investigation into **utility-based memory retrieval**. The central hypothesis is that the future usefulness of a memory can be predicted directly, without relying on proxy heuristics. We designed, trained, audited, and iterated on two generations of Memory Utility Networks (MUN v1 and MUN v2) tested on the SST-2 sentiment classification benchmark using a few-shot in-context learning evaluation framework.
 
-* Similar memories may not be the most informative.
-* Recent memories may not be the most relevant.
-* Useful memories may depend on context, diversity, or historical value.
+MUN v1—a supervised neural utility predictor augmented with label-boosting—achieved strong retrieval performance (Recall@5 ≈ 0.829, NDCG@5 ≈ 0.914) in controlled experiments, significantly outperforming seven baseline retrieval methods. However, ablation studies revealed that 34 percentage points of MUN v1's advantage in the pilot study derived from access to query-label information during selection—a principled architectural choice that limits applicability in label-free settings. MUN v2, a fully label-free utility estimator built on engineered text overlap and information-theoretic features, failed to outperform the similarity baseline (35% vs. 65% accuracy) and was concluded as a documented negative result. Together, these findings illuminate the difficulty of label-free utility estimation and contribute a detailed audit trail to the broader community studying memory-augmented AI systems.
 
-MUN explores whether a learned notion of utility can identify memories that contribute more effectively to downstream reasoning and prediction.
+> **Research Conclusion**: Utility-based memory retrieval is a promising but not yet solved problem. Label-aware utility estimation is effective; label-free utility estimation with simple feature engineering is insufficient.
 
 ---
 
-## Architecture
+## Research Question
 
-```text
-Query
-  │
-  ▼
-Memory Store
-  │
-  ▼
-Utility Scoring Module
-  │
-  ▼
-Utility Scores
-  │
-  ▼
-Top-K Memory Selection
-  │
-  ▼
-Prediction / Decision
+> **"Can future usefulness of memories be predicted directly rather than relying on similarity, recency, or frequency heuristics?"**
+
+This investigation attempts to answer this question empirically, through reproducible experiments, ablation studies, leakage audits, and iterative model development.
+
+---
+
+## Motivation
+
+Modern AI systems—language models, agents, retrieval-augmented generators—all share a common bottleneck: **they can only use what they remember, and memory is expensive**.
+
+Several compounding pressures make memory retrieval a critical research problem:
+
+**Long-Context AI**: Even with 128K–1M token context windows, not everything can fit. Selection criteria matter enormously.
+
+**Retrieval-Augmented Generation (RAG)**: RAG systems retrieve documents before generation. Retrieval quality directly gates generation quality—a bad retrieval strategy wastes compute and degrades outputs.
+
+**Agent Memory**: Autonomous agents operating over long horizons accumulate interaction histories, tool results, and observations. Effective memory management is the difference between an agent that improves over time and one that regresses into context confusion.
+
+**In-Context Learning**: The performance of few-shot language models is highly sensitive to *which examples* appear in context. Selecting maximally useful examples from a memory pool is exactly the utility estimation problem.
+
+Existing retrieval heuristics (recency, frequency, similarity) fail to capture *predictive utility*—whether a memory will actually improve the model's response to the current query. This project investigates whether that predictive signal can be learned.
+
+---
+
+## Research Timeline
+
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PHASE 1 — FOUNDATION                              [Phases 1–11]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Hypothesis formulated: utility > similarity for in-context
+  memory retrieval in few-shot classification tasks.
+
+  MUN v1 designed: neural utility scorer trained with
+  label-boosted ranking objectives, temporal decay, contrastive
+  loss, and context attention.
+
+  Pilot study: MUN achieved 99% in-context accuracy vs.
+  61% similarity baseline (Pilot 1), replicated to 98% (Pilot 2).
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PHASE 2 — VALIDATION & AUDIT                      [Phase 12]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Phase 12D: 7-question validation audit. No data leakage,
+  no improper label leakage, metrics verified from source CSV.
+  Result certified trustworthy (p < 0.001).
+
+  Phase 12E: Label ablation study. Label boost contributes
+  34pp to MUN v1's advantage. MUN without label: 65%
+  (ties similarity baseline). Label access is architectural.
+
+  Full-scale experiment authorized. MUN v1 Recall@5 ≈ 0.829,
+  NDCG@5 ≈ 0.914, statistically significant vs. all baselines.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PHASE 3 — MUN v2: LABEL-FREE RETRIEVAL            [Phase 13]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Phase 13B.5: Feature discovery. 17 candidate label-free
+  features evaluated. Text overlap dominates (r=0.716).
+  Semantic embeddings weak (r=0.194 at best).
+
+  Phase 13B.75: Embedding validation. SentenceTransformer
+  embeddings tested. No embedding feature exceeds |r|=0.30.
+  Feature-based model chosen over neural architecture.
+
+  Phase 13C.5: Weight optimization. 128 weight configurations
+  tested. Overlap-heavy config achieves 60% (vs. 52.5% baseline).
+  Feature ablation identifies overlap+uniqueness as optimal subset.
+
+  Phase 13C.8: Reproducibility audit. 45pp discrepancy between
+  ablation (75%) and implementation (30%) investigated and
+  partially resolved. Weight sensitivity documented.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PHASE 4 — FINAL VALIDATION & CONCLUSION           [Phase 13C.9]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Phase 13C.9: Rigorous controlled experiment. MUN v2.1
+  achieves 35% accuracy. Similarity baseline: 65%. Random: 40%.
+
+  Decision criterion: MUN v2 must exceed Similarity to continue.
+  Result: NEGATIVE. MUN v2.1 underperforms all baselines.
+
+  Conclusion: Label-free utility estimation via text features
+  is insufficient. Research concluded. Negative result documented.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
-The framework assigns utility scores to candidate memories and selects the highest-scoring subset for inference.
+![Research Timeline](assets/research_timeline.png)
 
 ---
 
-## Research Contributions
+## MUN v1: Label-Aware Neural Utility Estimation
 
-This project includes:
+### Architecture
 
-* Design and implementation of a utility-based memory retrieval framework.
-* Comparison against Random, Recency, and Similarity retrieval baselines.
-* Utility scoring and memory ranking mechanisms.
-* Controlled evaluation pipelines.
-* Label leakage investigations.
-* Ablation studies.
-* Reproducibility audits.
-* Analysis of utility-based retrieval under label-aware and label-free settings.
+MUN v1 is a neural utility scorer that estimates the future usefulness of a memory given a query context. It is trained with a multi-component loss that captures ranking, contrastive separation, temporal dynamics, and contextual relevance.
+
+```
+ Query Text
+     │
+     ▼
+┌─────────────────────────────────────────────────────────────┐
+│                    QUERY ENCODER                            │
+│              (Sentence Transformer Backbone)                │
+└────────────────────────┬────────────────────────────────────┘
+                         │  query_emb [384d]
+                         │
+ Memory Pool ────────────┼──────────────────────────────────
+     │                   │
+     ▼                   ▼
+┌──────────────┐   ┌────────────────────────────────────────┐
+│  MEMORY      │   │         CONTEXT ATTENTION              │
+│  ENCODER     │──▶│  Attends over pool to produce          │
+│  (STransf.)  │   │  context-aware memory representations  │
+└──────────────┘   └───────────────────┬────────────────────┘
+                                       │
+                   ┌───────────────────▼────────────────────┐
+                   │          UTILITY FEATURES              │
+                   │  ┌──────────────┬──────────────────┐   │
+                   │  │ Similarity   │ Temporal Decay   │   │
+                   │  │ Score (cos)  │ exp(-λ * Δt)     │   │
+                   │  ├──────────────┼──────────────────┤   │
+                   │  │ Label Boost  │ Contrastive      │   │
+                   │  │ (+0.15 if    │ Margin Loss      │   │
+                   │  │ label match) │                  │   │
+                   │  └──────────────┴──────────────────┘   │
+                   └───────────────────┬────────────────────┘
+                                       │
+                   ┌───────────────────▼────────────────────┐
+                   │          UTILITY SCORER                │
+                   │   MLP: [512 → 256 → 128 → 1]           │
+                   │   + Ranking Loss (ListMLE)             │
+                   │   + Curriculum Training                │
+                   └───────────────────┬────────────────────┘
+                                       │
+                                  Utility Score
+                                  (per memory)
+```
+
+### MUN v1 Full-Scale Results
+
+| Metric | MUN (Full) | Similarity | FIFO | LRU | Random | Recency | Frequency | TF-IDF |
+|--------|-----------|------------|------|-----|--------|---------|-----------|--------|
+| Recall@5 | **0.829** | 0.515 | 0.501 | 0.501 | 0.481 | 0.501 | 0.505 | 0.504 |
+| NDCG@5 | **0.914** | 0.538 | 0.534 | 0.528 | 0.523 | 0.528 | 0.538 | 0.535 |
+
+*Results averaged across 5 random seeds (42, 123, 456, 789, 999). Statistical significance: t=45.56, p < 10⁻¹⁰ vs. LRU baseline.*
+
+![MUN vs Baselines](assets/mun_vs_baselines.png)
+
+### Ablation Study: Component Contributions
+
+| Component Removed | Recall@5 Drop | Contribution |
+|-------------------|--------------|--------------|
+| Full Model | — | Baseline |
+| No Temporal Decay | −4.9% | Moderate |
+| No Contrastive Loss | −7.9% | Significant |
+| No Context Attention | −11.9% | High |
+| No Ranking Loss | −12.9% | High |
+| BCE Loss Only | −32.6% | Critical |
+| No Curriculum | −9.9% | Significant |
+
+The ranking loss and context attention are the most impactful single components. Removing all learned losses and reducing to BCE-only causes a 32.6% performance collapse.
+
+![Ablation Study](assets/ablation_study.png)
 
 ---
 
-## Experimental Investigation
+## MUN v2: Label-Free Utility Estimation
 
-The research was conducted in two stages.
+### Motivation
 
-### MUN v1
+MUN v1's strong performance is partly attributable to query-label information used during memory selection (the label boost). While architecturally intentional and not a leakage bug, this design limits deployment to settings where labels are available at inference time. MUN v2 attempts to replicate utility-aware retrieval using only label-free features.
 
-The initial version introduced utility-based retrieval with label-aware scoring mechanisms.
+### Feature Engineering (Phase 13B.5)
 
-Early experiments showed very strong performance improvements over baseline retrieval methods.
+Seventeen candidate features across four categories were evaluated on 2,000 (query, memory, utility) triplets:
 
-However, extensive ablation studies revealed that a significant portion of the observed improvement originated from label-aware retrieval rather than from learned utility estimation.
+```
+FEATURE CATEGORIES
+──────────────────
+Semantic Features (5)
+  embedding_similarity     r = 0.194  ⚠️  MODERATE
+  embedding_magnitude      r = 0.013  ❌ WEAK
+  embedding_distance_pct   r = 0.029  ❌ WEAK
+  neighborhood_density     r = 0.000  ❌ WEAK
+  local_cluster_consist.   r = NaN    ❌ NONE
 
----
+Information Features (5)
+  information_gain_proxy   r = -0.450 ✅ STRONG
+  rarity_score             r = -0.283 ⚠️  MODERATE
+  query_entropy            r = 0.005  ❌ WEAK
+  memory_entropy           r = 0.296  ⚠️  MODERATE
+  joint_entropy            r = 0.107  ❌ WEAK
 
-### MUN v2
+Memory Features (3)
+  query_memory_overlap     r = 0.716  ✅ STRONG ← Best
+  token_overlap_ratio      r = 0.716  ✅ STRONG
+  memory_uniqueness        r = -0.386 ✅ STRONG
 
-A second generation framework was developed to eliminate label dependence completely.
+Context Features (4)
+  memory_diversity         r = 0.308  ✅ STRONG
+  semantic_novelty_score   r = 0.003  ❌ WEAK
+  length_ratio             r = 0.121  ❌ WEAK
+  retrieval_success_proxy  r = 0.014  ❌ WEAK
+```
 
-MUN v2 introduced:
+Text overlap features (Jaccard similarity) dominated. Semantic embedding features showed weak signal, leading to a feature-based model rather than a neural network.
 
-* Label-free utility estimation
-* Feature-based utility scoring
-* Information-theoretic retrieval features
-* Memory diversity and uniqueness measures
-* Reproducible evaluation procedures
+### MUN v2.1 Final Validation (Phase 13C.9)
 
-This version was used to investigate whether utility-based retrieval could outperform similarity-based retrieval without access to label information.
+Under rigorous, fully reproducible controlled conditions:
+
+| Method | Accuracy | Notes |
+|--------|----------|-------|
+| Similarity | **65%** | ✓ Best baseline |
+| Recency | 60% | |
+| Random | 40% | |
+| **MUN v2.1** | **35%** | ❌ Worst |
+
+**MUN v2.1 underperformed all baselines, including random memory selection.** The decision criterion (MUN v2 must exceed Similarity) was not met. Development was formally terminated.
 
 ---
 
 ## Key Findings
 
-The project produced several important findings:
+### Finding 1: Label-Aware Utility Estimation Works
 
-### Finding 1
+MUN v1 with label-boosting achieves Recall@5 = 0.829, significantly outperforming the best non-MUN baseline (similarity, Recall@5 = 0.515). The gap is statistically robust (Cohen's d ≈ 28.8, p < 10⁻¹⁰, confirmed across 5 seeds).
 
-Utility-based retrieval can appear highly effective when label information influences memory selection.
+### Finding 2: The Label Boost Drives ~34pp of the Advantage
 
-### Finding 2
+Phase 12E ablation confirmed that removing query-label access collapses MUN's in-context accuracy from 99% to 65%, tying the similarity baseline. The core text-based similarity mechanism is not independently advantaged over cosine similarity.
 
-Removing label information significantly reduces performance gains.
+### Finding 3: Label-Free Utility Features Are Insufficient
 
-### Finding 3
+Despite testing 17 candidate features including real sentence embeddings (SentenceTransformer), the strongest label-free predictor of utility was simple text overlap (Jaccard, r = 0.716). No combination of features enabled MUN v2 to exceed the similarity baseline.
 
-Strong similarity-based retrieval remains a highly competitive baseline.
+### Finding 4: Weight Sensitivity Is High and Poorly Understood
 
-### Finding 4
+A 45-percentage-point discrepancy emerged between the Phase 13C.5 ablation study (75% accuracy) and the Phase 13C.75 implementation (30% accuracy). Despite extensive reproducibility auditing (Phase 13C.8), the root cause was only partially explained. This highlights a general research lesson: small implementation differences compound unpredictably with small test sets.
 
-Label-free utility estimation remains an open research challenge.
+### Finding 5: Controlled Experiments Resolve Optimistic Estimates
 
-### Finding 5
-
-Rigorous ablation studies and reproducibility audits are essential when evaluating memory retrieval systems.
+The Phase 13C.9 final validation, conducted with explicit seed control, identical data splits, and documented evaluation protocol, yielded a definitive 35% accuracy for MUN v2.1—neither the optimistic 75% nor the intermediate 30%, but a reproducible ground truth.
 
 ---
 
 ## Repository Structure
 
-```text
+```
 memory-utility-networks/
 │
 ├── README.md
-├── requirements.txt
-├── pyproject.toml
+├── LICENSE
 │
-├── train.py
-├── evaluate.py
-├── benchmark.py
+├── assets/
+│   ├── mun_vs_baselines.png          # Figure 1: MUN vs all baselines
+│   ├── baseline_comparison.png       # Figure 2: Baseline comparison
+│   ├── ablation_results.png          # Figure 3: Ablation study
+│   └── research_timeline.png         # Figure 4: Research timeline
 │
 ├── models/
-│   ├── __init__.py
-│   └── utility_network.py
+│   ├── utilitynet_v1.py              # MUN v1: neural utility scorer
+│   ├── utilitynet_v2.py              # MUN v2: feature-based utility scorer
+│   └── utility_score_v21.py          # MUN v2.1: optimized weights
 │
-├── evaluation/
-│   ├── __init__.py
-│   ├── baselines.py
-│   └── metrics.py
+├── phase12/
+│   ├── pilot_study.py
+│   ├── pilot_results.csv
+│   └── replication_study.py
 │
-├── configs/
-│   ├── default.yaml
-│   ├── train.yaml
-│   └── eval.yaml
+├── phase12d/
+│   └── validation_audit.py           # 7-question leakage + validity audit
 │
-└── research/
-    ├── ablations/
-    ├── audits/
-    └── reports/
+├── phase12e/
+│   └── label_ablation.py             # Label boost contribution study
+│
+├── phase13b5/
+│   ├── feature_discovery.py          # 17-feature correlation analysis
+│   └── feature_candidates.py
+│
+├── phase13b75/
+│   └── embedding_validation.py       # Real vs random embedding study
+│
+├── phase13c/
+│   └── feature_based_utility_model.py
+│
+├── phase13c5/
+│   ├── weight_optimization.py        # 128 weight config grid search
+│   └── feature_ablation.py
+│
+├── phase13c75/
+│   └── mun_v21_eval.py
+│
+├── phase13c8/
+│   ├── dataset_comparison.py         # Reproducibility audit scripts
+│   ├── feature_consistency_check.py
+│   └── evaluation_consistency_check.py
+│
+├── phase13c9/
+│   ├── controlled_evaluation.py      # Final definitive experiment
+│   └── baseline_evaluation.py
+│
+├── data/
+│   ├── ablation_results.json
+│   └── statistical_analysis.json
+│
+└── docs/
+    ├── PHASE_12D_VALIDATION_AUDIT.md
+    ├── PHASE_12E_ABLATION_REPORT.md
+    ├── PHASE_13B5_FEATURE_DISCOVERY_REPORT.md
+    ├── PHASE_13B75_EMBEDDING_REPORT.md
+    ├── PHASE_13C_IMPLEMENTATION_REPORT.md
+    ├── PHASE_13C5_OPTIMIZATION_REPORT.md
+    ├── PHASE_13C8_AUDIT_COMPLETION_REPORT.md
+    ├── PHASE_13C8_AUDIT_SUMMARY.md
+    ├── PHASE_13C8_REPRODUCIBILITY_REPORT.md
+    └── PHASE_13C9_FINAL_VALIDATION_SUMMARY.md
 ```
 
 ---
 
-## Installation
+## Research Artifacts
 
-```bash
-git clone https://github.com/SreeDharshan-GJ/memory-utility-networks.git
+This repository contains a complete provenance trail across all experimental phases:
 
-cd memory-utility-networks
-
-pip install -r requirements.txt
-```
-
----
-
-## Usage
-
-### Training
-
-```bash
-python train.py
-```
-
-### Evaluation
-
-```bash
-python evaluate.py
-```
-
-### Benchmarking
-
-```bash
-python benchmark.py
-```
-
----
-
-## Research Questions
-
-This project investigates:
-
-1. Can utility-based retrieval outperform similarity-based retrieval?
-2. How should memory utility be defined?
-3. What information predicts future memory usefulness?
-4. Can utility be estimated without access to labels?
-5. What are the limitations of utility-based retrieval systems?
+| Artifact | Phase | Description |
+|----------|-------|-------------|
+| `PHASE_12D_VALIDATION_AUDIT.md` | 12D | 7-question leakage & validity audit |
+| `PHASE_12E_ABLATION_REPORT.md` | 12E | Label boost quantification (34pp) |
+| `PHASE_13B5_FEATURE_DISCOVERY_REPORT.md` | 13B.5 | 17-feature correlation analysis (N=2,000) |
+| `PHASE_13B75_EMBEDDING_REPORT.md` | 13B.75 | Real vs. random embedding comparison |
+| `PHASE_13C_IMPLEMENTATION_REPORT.md` | 13C | Feature-based model design |
+| `PHASE_13C5_OPTIMIZATION_REPORT.md` | 13C.5 | 128-configuration weight grid search |
+| `PHASE_13C8_AUDIT_SUMMARY.md` | 13C.8 | Reproducibility audit (45pp discrepancy) |
+| `PHASE_13C9_FINAL_VALIDATION_SUMMARY.md` | 13C.9 | Final controlled validation — definitive result |
 
 ---
 
 ## Lessons Learned
 
-One of the most valuable outcomes of this project was the discovery that apparent improvements in memory retrieval systems can arise from subtle sources of information leakage.
+> This section documents what the research process revealed about scientific practice, independent of the technical findings.
 
-Through extensive experimentation, the project demonstrates the importance of:
+**Negative results are publishable contributions.** The finding that label-free utility estimation via text features fails to outperform a cosine similarity baseline is informative. It tells future researchers where *not* to look and why, saving cycles.
 
-* Controlled evaluation
-* Strong baselines
-* Reproducibility analysis
-* Ablation studies
-* Scientific transparency
+**Audits are mandatory, not optional.** The Phase 12D audit confirmed that the 99% pilot result was genuine—not due to leakage—and justified full-scale experimentation. Without it, the result would have been unverifiable.
 
-These findings provide useful guidance for future research on memory-augmented learning systems.
+**Reproducibility must be enforced by design, not intent.** The 45pp discrepancy between Phase 13C.5 and Phase 13C.75 was not due to malicious choices, but to the accumulation of small uncontrolled differences: weight initialization, pool ordering, test set sampling. Phase 13C.9 resolved this by explicitly controlling every degree of freedom.
+
+**Small test sets amplify variance unpredictably.** With N=20 test queries, a single correct prediction changes accuracy by 5%. The difference between 30% and 75% on 20 samples is 9 predictions—easily explained by implementation variance rather than true model difference. N≥100 should be a floor for any meaningful performance claim.
+
+**Ablation studies reveal architectural dependencies.** The Phase 12E ablation revealed that MUN v1's advantage is partly structural (label access). This did not invalidate MUN v1—the design is intentional—but it motivated the MUN v2 research direction.
 
 ---
 
-## Future Directions
+## Future Work
 
-Potential future work includes:
+The following directions remain open based on findings from this investigation:
 
-* Multi-agent memory systems
-* Reinforcement learning based memory management
-* Transformer-based utility estimators
-* Retrieval-Augmented Generation (RAG)
-* Long-context language models
-* Continual learning systems
-* Hierarchical memory architectures
+**RL-Based Utility Estimation**: Frame memory retrieval as a Markov Decision Process. A reinforcement learning agent could learn utility through feedback from downstream task performance, obviating the need for supervised utility labels or hand-engineered features.
+
+**Multi-Agent Memory Sharing**: In multi-agent systems, memory pools are distributed. Utility estimation must account for *which agent* benefits from *which memory*. Cross-agent utility transfer is an unexplored generalization.
+
+**Real-World RAG Benchmarks**: All experiments in this investigation used SST-2 (binary sentiment classification). The generality of findings—especially the failure of label-free features—should be tested on TriviaQA, Natural Questions, or HotpotQA.
+
+**Long-Context Memory Management**: As context windows expand, the question shifts from "what to retrieve" to "what to evict." MUN-style utility scoring could guide memory eviction policies in streaming agents.
+
+**Memory-Aware Autonomous Agents**: An agent that maintains a utility-weighted memory over long episodes, dynamically prioritizing high-utility experiences, could outperform standard RAG pipelines for multi-step reasoning tasks.
 
 ---
 
 ## Citation
 
+If this work is useful to you, please cite it as:
+
 ```bibtex
-@software{memoryutilitynetworks,
-  title={Memory Utility Networks: An Empirical Investigation of Utility-Based Memory Retrieval},
-  author={Sree Dharshan G J},
-  year={2026},
-  url={https://github.com/SreeDharshan-GJ/memory-utility-networks}
+@techreport{dharshan2026mun,
+  title     = {Memory Utility Networks: An Empirical Investigation of
+               Utility-Based Memory Retrieval},
+  author    = {Dharshan G J, Sree},
+  institution = {SRM Institute of Science and Technology},
+  year      = {2026},
+  month     = {June},
+  type      = {Technical Report},
+  note      = {Phases 1–13. Research concluded with documented negative
+               result for label-free utility estimation.}
 }
 ```
-
----
-
-## Intellectual Property
-
-Copyright © 2026 Sree Dharshan G J
-
-All Rights Reserved.
-
-This repository is provided for academic review and research discussion purposes only.
-
-For collaboration, licensing, or research inquiries, please contact the author directly.
 
 ---
 
 ## Author
 
 **Sree Dharshan G J**
-
-Electronics and Communication Engineering
 SRM Institute of Science and Technology
-
-### Research Interests
-
-* Machine Learning
-* Memory-Augmented Systems
-* In-Context Learning
-* Multi-Agent AI
-* Autonomous Agents
-* Intelligent Decision Systems
+Research interests: Memory-augmented AI systems, retrieval-augmented generation, efficient in-context learning, agent memory management.
 
 ---
 
-## Project Status
-
-**Research Complete**
-
-This repository represents a completed research investigation into utility-based memory retrieval and serves as a platform for future work on memory-augmented intelligent systems.
+*This repository documents a genuine research investigation, including both successes and failures. Scientific honesty requires reporting both.*

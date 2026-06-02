@@ -4,7 +4,7 @@
 
 ### Utility-Based Memory Retrieval for In-Context Learning and Long-Horizon Decision Making
 
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
+[![Status](https://img.shields.io/badge/Status-Active%20Research-orange.svg)]()
 [![Python](https://img.shields.io/badge/Python-3.10+-green.svg)]()
 [![Research](https://img.shields.io/badge/Type-Research-red.svg)]()
 
@@ -94,7 +94,6 @@ The Utility Network learns to assign a utility score to candidate memories and s
 memory-utility-networks/
 │
 ├── README.md
-├── LICENSE
 ├── .gitignore
 ├── requirements.txt
 ├── pyproject.toml
@@ -122,16 +121,9 @@ memory-utility-networks/
 
 ## Installation
 
-Clone the repository:
-
 ```bash
 git clone https://github.com/SreeDharshan-GJ/memory-utility-networks.git
 cd memory-utility-networks
-```
-
-Install dependencies:
-
-```bash
 pip install -r requirements.txt
 ```
 
@@ -139,31 +131,21 @@ pip install -r requirements.txt
 
 ## Training
 
-Train the utility network:
-
 ```bash
 python train.py
 ```
-
-The training pipeline learns a utility function that predicts the future usefulness of candidate memories.
 
 ---
 
 ## Evaluation
 
-Evaluate retrieval performance:
-
 ```bash
 python evaluate.py
 ```
 
-Evaluation compares utility-based retrieval against conventional retrieval baselines.
-
 ---
 
 ## Benchmarking
-
-Run benchmark experiments:
 
 ```bash
 python benchmark.py
@@ -195,8 +177,6 @@ The framework enables systematic comparison of retrieval strategies and supports
 
 ## Research Questions
 
-This project investigates the following questions:
-
 1. Can utility-based retrieval outperform heuristic memory selection?
 2. How does memory utility evolve over time?
 3. Can utility estimation improve long-horizon reasoning?
@@ -205,22 +185,7 @@ This project investigates the following questions:
 
 ---
 
-## Potential Applications
-
-* Memory-Augmented Neural Networks
-* Retrieval-Augmented Learning
-* In-Context Learning Systems
-* Autonomous Agents
-* Long-Horizon Planning
-* Decision Support Systems
-* Multi-Agent Collaboration
-* Adaptive Knowledge Retrieval
-
----
-
 ## Future Work
-
-Planned research directions include:
 
 * Transformer-based utility estimators
 * Multi-agent memory systems
@@ -235,8 +200,6 @@ Planned research directions include:
 
 ## Citation
 
-If you use this repository in academic work, please cite:
-
 ```bibtex
 @software{memoryutilitynetworks,
   title={Memory Utility Networks},
@@ -248,11 +211,25 @@ If you use this repository in academic work, please cite:
 
 ---
 
-## License
+## Usage Restrictions
 
-This project is released under the Apache 2.0 License.
+This repository is provided for academic review and research discussion.
 
-See the LICENSE file for details.
+All rights are reserved by the author.
+
+For collaboration, licensing inquiries, or research partnerships, please contact the author directly.
+
+---
+
+## Intellectual Property Notice
+
+Copyright (c) 2026 Sree Dharshan G J
+
+All rights reserved.
+
+The concepts, experimental methodology, architecture design, and implementation details presented in this repository constitute original research work.
+
+No permission is granted to copy, reproduce, redistribute, modify, commercialize, or create derivative works from this repository without explicit written permission from the author.
 
 ---
 
@@ -277,5 +254,5 @@ SRM Institute of Science and Technology
 
 ## Disclaimer
 
-This repository is intended for research and educational purposes. The framework is actively under development and serves as a platform for studying utility-based memory retrieval strategies in intelligent systems.
+This repository is intended for research and academic review purposes. The framework is actively under development and serves as a platform for studying utility-based memory retrieval strategies in intelligent systems.
 

@@ -1,0 +1,57 @@
+# Training Configuration — extends default.yaml
+_base_: "default.yaml"
+
+training:
+  batch_size: 32
+  num_epochs: 100
+  learning_rate: 1.0e-4
+  mixed_precision: true
+  use_wandb: false
+  wandb_project: "memory-utility-networks"
+  wandb_entity: null   # set your W&B entity here
+
+  # FIX: key names match CombinedUtilityLoss parameters
+  utility_loss_weight: 1.0
+  contrastive_loss_weight: 0.5
+  ranking_loss_weight: 0.3
+  temporal_loss_weight: 0.1
+
+  # Curriculum learning
+  curriculum:
+    enabled: true
+    stages:
+      - name: "easy"
+        epochs: 20
+        episode_length: 10
+        capacity: 100
+        num_episodes: 500
+      - name: "medium"
+        epochs: 40
+        episode_length: 25
+        capacity: 500
+        num_episodes: 1000
+      - name: "hard"
+        epochs: 40
+        episode_length: 50
+        capacity: 1000
+        num_episodes: 1000
+
+  # Contrastive learning
+  contrastive:
+    enabled: true
+    temperature: 0.07
+
+  gradient_clip: 1.0
+  warmup_steps: 300
+  scheduler: "cosine"
+  save_every_n_epochs: 10
+  eval_every_n_epochs: 2
+  early_stopping: true
+  patience: 15
+
+model:
+  embedding_dim: 384
+  hidden_dim: 512
+  num_transformer_layers: 3
+  num_context_layers: 2
+  dropout: 0.1

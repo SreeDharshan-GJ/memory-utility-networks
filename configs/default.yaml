@@ -1,1 +1,152 @@
+# Memory Utility Networks — Default Configuration
+# All dimension values are aligned with all-MiniLM-L6-v2 (384-dim embeddings).
 
+project:
+  name: "memory-utility-networks"
+  version: "1.0.0"
+  description: "Learned memory utility for long-horizon agentic AI"
+  seed: 42
+
+# ── Model Architecture ─────────────────────────────────────────────────────────
+model:
+  # FIX: was 768 — must match embedding model output dim (384 for all-MiniLM-L6-v2)
+  embedding_dim: 384
+  hidden_dim: 512
+  utility_hidden_dims: [256, 128, 64]
+  num_attention_heads: 8
+  num_transformer_layers: 3
+  num_context_layers: 2
+  contrastive_proj_dim: 128
+  dropout: 0.1
+  max_sequence_length: 512
+  activation: "gelu"
+
+  utility_head:
+    output_dim: 1
+    use_sigmoid: true
+    temperature: 1.0
+
+# ── Memory System ──────────────────────────────────────────────────────────────
+memory:
+  max_capacity: 1000
+  retention_threshold: 0.5
+  eviction_strategy: "utility"
+  index_type: "flat"
+  # FIX: embedding_model output is 384-dim, matching model.embedding_dim above
+  embedding_model: "all-MiniLM-L6-v2"
+  similarity_metric: "cosine"
+
+  temporal_decay: 0.95
+  decay_steps: 100
+
+  top_k: 10
+  rerank: true
+  diversity_lambda: 0.3
+
+  db_path: "data/memory.db"
+  faiss_index_path: "data/faiss_index"
+
+# ── Training ───────────────────────────────────────────────────────────────────
+training:
+  batch_size: 32
+  eval_batch_size: 64
+  num_epochs: 50
+  learning_rate: 3.0e-4
+  weight_decay: 1.0e-4
+  gradient_clip: 1.0
+  warmup_steps: 500
+  scheduler: "cosine"
+  optimizer: "adamw"
+  mixed_precision: true
+
+  # FIX: key names now match CombinedUtilityLoss constructor parameters
+  utility_loss_weight: 1.0
+  contrastive_loss_weight: 0.5
+  ranking_loss_weight: 0.3
+  temporal_loss_weight: 0.1
+
+  # Checkpointing
+  checkpoint_dir: "checkpoints"
+  save_every_n_epochs: 5
+  keep_last_k: 3
+
+  # Early stopping
+  early_stopping: true
+  patience: 10
+  min_delta: 1.0e-4
+
+  # Logging
+  log_dir: "logs"
+  log_every_n_steps: 50
+  eval_every_n_epochs: 2
+  use_wandb: false
+  use_tensorboard: true
+
+# ── Dataset ────────────────────────────────────────────────────────────────────
+dataset:
+  train_path: "data/train.jsonl"
+  val_path: "data/val.jsonl"
+  test_path: "data/test.jsonl"
+  num_train_samples: 50000
+  num_val_samples: 5000
+  num_test_samples: 10000
+  max_episode_length: 50
+  min_episode_length: 10
+  memory_capacity: 128
+  task_types:
+    - "qa"
+    - "reasoning"
+    - "planning"
+    - "coding"
+    - "summarization"
+
+# ── Agent ──────────────────────────────────────────────────────────────────────
+agent:
+  model: "gpt-4o"
+  temperature: 0.7
+  max_tokens: 1024
+  max_iterations: 20
+  tools:
+    - "search"
+    - "calculator"
+    - "code_executor"
+    - "memory_store"
+    - "memory_retrieve"
+
+# ── API ────────────────────────────────────────────────────────────────────────
+api:
+  host: "0.0.0.0"
+  port: 8000
+  workers: 2
+  reload: false
+  cors_origins:
+    - "http://localhost:3000"
+    - "http://127.0.0.1:3000"
+  rate_limit: 100
+  timeout: 60
+
+# ── Evaluation ─────────────────────────────────────────────────────────────────
+evaluation:
+  metrics:
+    - "utility_prediction_accuracy"
+    - "memory_hit_rate"
+    - "task_completion_rate"
+    - "memory_efficiency"
+    - "retention_precision"
+    - "retention_recall"
+    - "temporal_consistency"
+  # FIX: now includes all implemented baselines
+  baselines:
+    - "fifo"
+    - "lru"
+    - "random"
+    - "recency"
+    - "frequency"
+    - "similarity"
+    - "tfidf"
+  num_eval_episodes: 500
+  eval_tasks:
+    - "needle_in_haystack"
+    - "multi_hop_qa"
+    - "long_horizon_planning"
+    - "episodic_recall"

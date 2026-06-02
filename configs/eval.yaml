@@ -1,0 +1,67 @@
+# Evaluation Configuration — extends default.yaml
+_base_: "default.yaml"
+
+eval:
+  checkpoint_path: "checkpoints/best_model.pt"
+  output_dir: "evaluation/results"
+  num_episodes: 500
+  seed: 42
+
+  # FIX: all implemented baselines listed and enabled
+  baselines:
+    fifo:
+      enabled: true
+      capacity: 1000
+    lru:
+      enabled: true
+      capacity: 1000
+    random:
+      enabled: true
+      capacity: 1000
+    recency:
+      enabled: true
+      capacity: 1000
+      decay: 0.05
+    frequency:
+      enabled: true
+      capacity: 1000
+    similarity:
+      enabled: true
+      capacity: 1000
+      threshold: 0.85
+    tfidf:
+      enabled: true
+      capacity: 1000
+      context_window: 5
+
+  tasks:
+    needle_in_haystack:
+      enabled: true
+      num_distractors: [10, 50, 100, 500]
+      num_episodes: 100
+
+    multi_hop_qa:
+      enabled: true
+      num_hops: [2, 3, 4, 5]
+      num_episodes: 100
+
+    long_horizon_planning:
+      enabled: true
+      horizon_lengths: [10, 25, 50, 100]
+      num_episodes: 100
+
+    episodic_recall:
+      enabled: true
+      delay_steps: [5, 10, 25, 50]
+      num_episodes: 100
+
+    forgetting_curve:
+      enabled: true
+      intervals: [1, 5, 10, 25, 50, 100]
+      num_episodes: 100
+
+  report:
+    generate_plots: true
+    generate_latex: true
+    plot_format: "pdf"
+    dpi: 300

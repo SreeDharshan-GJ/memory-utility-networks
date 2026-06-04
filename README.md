@@ -482,4 +482,5 @@ Research interests: Memory-augmented AI systems, retrieval-augmented generation,
 
 ✅ Research Archived
 
+---
 *This repository documents a genuine research investigation, including both successes and failures. Scientific honesty requires reporting both.*

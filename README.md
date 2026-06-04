@@ -456,4 +456,30 @@ Research interests: Memory-augmented AI systems, retrieval-augmented generation,
 
 ---
 
+## Repository Resources
+
+| Resource | Description |
+|-----------|------------|
+| Technical Report | Complete research documentation |
+| Source Code | MUN implementation and evaluation |
+| Experimental Reports | Phase-by-phase research artifacts |
+| Figures | Research visualizations and results |
+| Documentation | Audits, ablations, and validation studies |
+
+---
+
+## Research Status
+
+✅ MUN v1 Completed
+
+✅ MUN v2 Completed
+
+✅ Validation Audits Completed
+
+✅ Reproducibility Investigation Completed
+
+✅ Technical Report Published
+
+✅ Research Archived
+
 *This repository documents a genuine research investigation, including both successes and failures. Scientific honesty requires reporting both.*

@@ -14,6 +14,30 @@
 
 ---
 
+## 📄 Technical Report
+
+The complete research report is available here:
+
+📘 **[Memory Utility Networks Technical Report](technical_report/Memory_Utility_Networks_Technical_Report.pdf)**
+
+The report contains:
+
+- Complete methodology
+- MUN v1 architecture
+- MUN v2 development
+- Validation audits
+- Feature engineering studies
+- Reproducibility investigations
+- Statistical analysis
+- Final experimental findings
+- Future research directions
+
+**Report Length:** ~40+ pages  
+**Research Duration:** Phases 1–13  
+**Status:** Completed Investigation
+
+---
+
 ## Abstract
 
 Memory retrieval is a foundational capability of intelligent systems. Whether in retrieval-augmented generation (RAG), few-shot in-context learning, or long-horizon agent reasoning, a system's ability to surface the *right* memory at the *right* time is critical to downstream performance. Current retrieval methods—cosine similarity, recency, access frequency—are principled but fundamentally reactive: they score memories by what they *have been*, not by what they *will be worth* when retrieved.

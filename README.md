@@ -7,7 +7,7 @@
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue)](https://python.org)
 [![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
 [![Reproducible](https://img.shields.io/badge/Reproducible-Yes-brightgreen)](https://github.com)
-[![Audited](https://img.shields.io/badge/Audited-7%20Phases-orange)](docs/)
+[![Audited](https://img.shields.io/badge/Audited-7%20Phases-orange)](13)
 [![Citation](https://img.shields.io/badge/Citation-BibTeX-blue)](CITATION.cff)
 
 **Author**: Sree Dharshan G J — SRM Institute of Science and Technology

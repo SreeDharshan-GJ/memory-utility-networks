@@ -8,6 +8,7 @@
 [![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
 [![Reproducible](https://img.shields.io/badge/Reproducible-Yes-brightgreen)](https://github.com)
 [![Audited](https://img.shields.io/badge/Audited-7%20Phases-orange)](docs/)
+[![Citation](https://img.shields.io/badge/Citation-BibTeX-blue)](CITATION.cff)
 
 **Author**: Sree Dharshan G J — SRM Institute of Science and Technology
 **Status**: Research complete. Negative results documented. Artifacts archived.
@@ -37,8 +38,8 @@ The report contains:
 * **Research Duration:** Phases 1–13
 * **Status:** Completed Investigation
 * **Outcome:** Positive result for label-aware retrieval (MUN v1); documented negative result for label-free utility estimation (MUN v2)
-## Overview
 
+## Overview
 <p align="center">
   <img src="assets/architecture_overview.png" width="900">
 </p>

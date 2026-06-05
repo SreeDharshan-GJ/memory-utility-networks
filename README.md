@@ -438,6 +438,7 @@ This investigation contributes:
 **Small test sets amplify variance unpredictably.** With N=20 test queries, a single correct prediction changes accuracy by 5%. The difference between 30% and 75% on 20 samples is 9 predictions—easily explained by implementation variance rather than true model difference. N≥100 should be a floor for any meaningful performance claim.
 
 **Ablation studies reveal architectural dependencies.** The Phase 12E ablation revealed that MUN v1's advantage is partly structural (label access). This did not invalidate MUN v1—the design is intentional—but it motivated the MUN v2 research direction.
+
 ---
 ## Research Impact
 

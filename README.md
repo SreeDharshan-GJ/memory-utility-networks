@@ -32,8 +32,8 @@ The report contains:
 - Final experimental findings
 - Future research directions
 
-**Research Duration:** Phases 1–13
-**Status:** Completed Investigationn
+- **Research Duration:** Phases 1–13
+- **Status:** Completed Investigation
 
 ---
 ## Key Results

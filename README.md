@@ -33,7 +33,6 @@ The report contains:
 - Future research directions
 
 **Research Duration:** Phases 1–13
-
 **Status:** Completed Investigationn
 
 ---

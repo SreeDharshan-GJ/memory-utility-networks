@@ -42,7 +42,6 @@ The report contains:
 <p align="center">
   <img src="assets/architecture_overview.png" width="900">
 </p>
-
 Memory Utility Networks (MUN) investigates whether the future usefulness of memories can be predicted directly rather than approximated through traditional retrieval heuristics such as similarity, recency, or frequency.
 
 The project spans thirteen research phases including architecture development, validation audits, reproducibility investigations, ablation studies, feature discovery, and final controlled evaluation.

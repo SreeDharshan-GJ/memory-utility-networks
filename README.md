@@ -37,6 +37,20 @@ The report contains:
 **Status:** Completed Investigation
 
 ---
+## Key Results
+
+| Result                       | Value                           |
+| ---------------------------- | ------------------------------- |
+| MUN v1 Recall@5              | **0.829**                       |
+| MUN v1 NDCG@5                | **0.914**                       |
+| Best Baseline Recall@5       | **0.515**                       |
+| Label Boost Contribution     | **34 percentage points**        |
+| Strongest Label-Free Feature | **Jaccard Overlap (r = 0.716)** |
+| MUN v2.1 Accuracy            | **35%**                         |
+| Similarity Baseline Accuracy | **65%**                         |
+| Final Outcome                | **Negative Result Documented**  |
+
+---
 
 ## Abstract
 

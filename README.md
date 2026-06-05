@@ -37,7 +37,22 @@ The report contains:
 * **Research Duration:** Phases 1–13
 * **Status:** Completed Investigation
 * **Outcome:** Positive result for label-aware retrieval (MUN v1); documented negative result for label-free utility estimation (MUN v2)
+## Overview
 
+<p align="center">
+  <img src="assets/architecture_overview.png" width="900">
+</p>
+
+Memory Utility Networks (MUN) investigates whether the future usefulness of memories can be predicted directly rather than approximated through traditional retrieval heuristics such as similarity, recency, or frequency.
+
+The project spans thirteen research phases including architecture development, validation audits, reproducibility investigations, ablation studies, feature discovery, and final controlled evaluation.
+
+The investigation produced two major outcomes:
+
+* **MUN v1** demonstrated strong utility-aware retrieval performance under label-aware conditions.
+* **MUN v2** documented a reproducible negative result for label-free utility estimation.
+
+Together, these findings provide empirical evidence that utility-aware memory retrieval is promising, while also highlighting the limitations of current label-free approaches.
 
 ---
 ## Key Results

@@ -379,34 +379,34 @@ memory-utility-networks/
 ├── pyproject.toml
 ├── .gitignore
 │
-├── train.py                    # Training pipeline
-├── evaluate.py                 # Evaluation framework
-├── benchmark.py                # Baseline benchmarking suite
+├── train.py
+├── evaluate.py
+├── benchmark.py
 │
-├── models/                     # Memory Utility Network implementations
+├── models/
 │   ├── utilitynet_v1.py
 │   ├── utilitynet_v2.py
 │   └── utility_score_v21.py
 │
-├── evaluation/                 # Experimental evaluation and validation
+├── evaluation/
 │   ├── baseline_evaluation.py
 │   ├── controlled_evaluation.py
 │   ├── feature_ablation.py
 │   └── statistical_analysis.py
 │
-├── configs/                    # Experiment and model configurations
+├── configs/
 │   ├── mun_v1.yaml
 │   ├── mun_v2.yaml
 │   └── experiment_configs.yaml
 │
-├── assets/                     # Figures and visualizations
+├── assets/
+│   ├── architecture.png
 │   ├── mun_vs_baselines.png
 │   ├── baseline_comparison.png
 │   ├── ablation_study.png
-│   ├── research_timeline.png
-│   └── architecture_overview.png
+│   └── research_timeline.png
 │
-├── docs/                       # Research reports and audit artifacts
+├── docs/
 │   ├── PHASE_12D_VALIDATION_AUDIT.md
 │   ├── PHASE_12E_ABLATION_REPORT.md
 │   ├── PHASE_13B5_FEATURE_DISCOVERY_REPORT.md
@@ -420,24 +420,67 @@ memory-utility-networks/
 │
 └── technical_report/
     └── Memory_Utility_Networks_Technical_Report.pdf
-
 ```
+
+---
+
+## Quick Start
+
+### Installation
+
+```bash
+git clone https://github.com/YOUR_USERNAME/memory-utility-networks.git
+
+cd memory-utility-networks
+
+pip install -r requirements.txt
+```
+
+### Training
+
+```bash
+python train.py
+```
+
+### Evaluation
+
+```bash
+python evaluate.py
+```
+
+### Benchmarking
+
+```bash
+python benchmark.py
+```
+
+### Generate Experimental Results
+
+```bash
+python evaluation/controlled_evaluation.py
+```
+
+The repository includes all scripts required to reproduce the primary experimental results described in the technical report.
+
+---
+
 ## Research Artifacts
 
 This repository contains a complete provenance trail across all experimental phases:
 
-| Artifact | Phase | Description |
-|----------|-------|-------------|
-| `PHASE_12D_VALIDATION_AUDIT.md` | 12D | 7-question leakage & validity audit |
-| `PHASE_12E_ABLATION_REPORT.md` | 12E | Label boost quantification (34pp) |
-| `PHASE_13B5_FEATURE_DISCOVERY_REPORT.md` | 13B.5 | 17-feature correlation analysis (N=2,000) |
-| `PHASE_13B75_EMBEDDING_REPORT.md` | 13B.75 | Real vs. random embedding comparison |
-| `PHASE_13C_IMPLEMENTATION_REPORT.md` | 13C | Feature-based model design |
-| `PHASE_13C5_OPTIMIZATION_REPORT.md` | 13C.5 | 128-configuration weight grid search |
-| `PHASE_13C8_AUDIT_SUMMARY.md` | 13C.8 | Reproducibility audit (45pp discrepancy) |
-| `PHASE_13C9_FINAL_VALIDATION_SUMMARY.md` | 13C.9 | Final controlled validation — definitive result |
+| Artifact                                 | Phase  | Description                                     |
+| ---------------------------------------- | ------ | ----------------------------------------------- |
+| `PHASE_12D_VALIDATION_AUDIT.md`          | 12D    | 7-question leakage & validity audit             |
+| `PHASE_12E_ABLATION_REPORT.md`           | 12E    | Label boost quantification (34pp)               |
+| `PHASE_13B5_FEATURE_DISCOVERY_REPORT.md` | 13B.5  | 17-feature correlation analysis (N=2,000)       |
+| `PHASE_13B75_EMBEDDING_REPORT.md`        | 13B.75 | Real vs. random embedding comparison            |
+| `PHASE_13C_IMPLEMENTATION_REPORT.md`     | 13C    | Feature-based model design                      |
+| `PHASE_13C5_OPTIMIZATION_REPORT.md`      | 13C.5  | 128-configuration weight grid search            |
+| `PHASE_13C8_AUDIT_SUMMARY.md`            | 13C.8  | Reproducibility audit (45pp discrepancy)        |
+| `PHASE_13C9_FINAL_VALIDATION_SUMMARY.md` | 13C.9  | Final controlled validation — definitive result |
 
 ---
+
 ## Reproducibility
 
 ### Random Seeds
@@ -451,6 +494,7 @@ All primary experiments were evaluated across multiple seeds:
 789
 999
 ```
+
 ### Environment
 
 ```text
@@ -468,10 +512,9 @@ Scikit-Learn
 * Audited metric computation
 * Reproducibility validation (Phase 13C.8)
 * Independent final validation (Phase 13C.9)
-  
+
 Reproducibility was treated as a first-class research objective throughout the investigation.
 
----
 
 ## Research Contributions
 

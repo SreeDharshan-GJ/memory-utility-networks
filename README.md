@@ -32,9 +32,8 @@ The report contains:
 - Final experimental findings
 - Future research directions
 
-**Report Length:** ~40+ pages  
-**Research Duration:** Phases 1–13  
-**Status:** Completed Investigation
+**Research Duration:** Phases 1–13
+**Status:** Completed Investigationn
 
 ---
 ## Key Results

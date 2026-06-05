@@ -363,7 +363,6 @@ memory-utility-networks/
 ├── assets/
 │   ├── architecture.png
 │   ├── mun_vs_baselines.png
-│   ├── baseline_comparison.png
 │   ├── ablation_study.png
 │   └── research_timeline.png
 │

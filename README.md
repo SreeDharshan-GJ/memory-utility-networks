@@ -41,10 +41,6 @@ The report contains:
 
 ## Overview
 
-<p align="center">
-  <img src="assets/architecture.png" width="900">
-</p>
-
 Memory Utility Networks (MUN) is a research investigation into utility-based memory retrieval for intelligent systems.
 
 Rather than selecting memories using traditional heuristics such as similarity, recency, or frequency, MUN explores whether the future usefulness of a memory can be predicted directly.
@@ -216,48 +212,13 @@ PHASE 4 — FINAL VALIDATION & CONCLUSION           [Phase 13C.9]
 
 MUN v1 is a neural utility scorer that estimates the future usefulness of a memory given a query context. It is trained with a multi-component loss that captures ranking, contrastive separation, temporal dynamics, and contextual relevance.
 
-```
- Query Text
-     │
-     ▼
-┌─────────────────────────────────────────────────────────────┐
-│                    QUERY ENCODER                            │
-│              (Sentence Transformer Backbone)                │
-└────────────────────────┬────────────────────────────────────┘
-                         │  query_emb [384d]
-                         │
- Memory Pool ────────────┼──────────────────────────────────
-     │                   │
-     ▼                   ▼
-┌──────────────┐   ┌────────────────────────────────────────┐
-│  MEMORY      │   │         CONTEXT ATTENTION              │
-│  ENCODER     │──▶│  Attends over pool to produce          │
-│  (STransf.)  │   │  context-aware memory representations  │
-└──────────────┘   └───────────────────┬────────────────────┘
-                                       │
-                   ┌───────────────────▼────────────────────┐
-                   │          UTILITY FEATURES              │
-                   │  ┌──────────────┬──────────────────┐   │
-                   │  │ Similarity   │ Temporal Decay   │   │
-                   │  │ Score (cos)  │ exp(-λ * Δt)     │   │
-                   │  ├──────────────┼──────────────────┤   │
-                   │  │ Label Boost  │ Contrastive      │   │
-                   │  │ (+0.15 if    │ Margin Loss      │   │
-                   │  │ label match) │                  │   │
-                   │  └──────────────┴──────────────────┘   │
-                   └───────────────────┬────────────────────┘
-                                       │
-                   ┌───────────────────▼────────────────────┐
-                   │          UTILITY SCORER                │
-                   │   MLP: [512 → 256 → 128 → 1]           │
-                   │   + Ranking Loss (ListMLE)             │
-                   │   + Curriculum Training                │
-                   └───────────────────┬────────────────────┘
-                                       │
-                                  Utility Score
-                                  (per memory)
-```
+<p align="center">
+  <img src="assets/architecture.png" width="900">
+</p>
 
+MUN v1 estimates the future usefulness of a memory given a query context. The architecture combines SentenceTransformer-based encoders, context attention, utility feature extraction, temporal decay modeling, label-aware utility boosting, and a ranking-based neural utility scorer optimized using ListMLE and curriculum training.
+
+---
 ### MUN v1 Full-Scale Results
 
 | Metric | MUN (Full) | Similarity | FIFO | LRU | Random | Recency | Frequency | TF-IDF |

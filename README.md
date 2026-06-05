@@ -376,7 +376,18 @@ This repository contains a complete provenance trail across all experimental pha
 | `PHASE_13C9_FINAL_VALIDATION_SUMMARY.md` | 13C.9 | Final controlled validation — definitive result |
 
 ---
+## Research Contributions
 
+This investigation contributes:
+
+* A formal framework for utility-based memory retrieval.
+* MUN v1, a label-aware neural utility scorer.
+* A comprehensive ablation study quantifying architectural contributions.
+* A multi-phase validation and reproducibility audit pipeline.
+* A documented negative result for label-free utility estimation.
+* An empirical analysis of 17 candidate utility features.
+* Open-source artifacts supporting reproducibility and future research.
+---
 ## Lessons Learned
 
 > This section documents what the research process revealed about scientific practice, independent of the technical findings.

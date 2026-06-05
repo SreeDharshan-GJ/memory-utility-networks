@@ -112,6 +112,32 @@ Several compounding pressures make memory retrieval a critical research problem:
 Existing retrieval heuristics (recency, frequency, similarity) fail to capture *predictive utility*—whether a memory will actually improve the model's response to the current query. This project investigates whether that predictive signal can be learned.
 
 ---
+## Dataset
+
+### Benchmark
+
+**Dataset:** SST-2 (Stanford Sentiment Treebank)
+
+**Task:** Binary sentiment classification
+
+**Evaluation Setting:** Few-shot In-Context Learning
+
+### Why SST-2?
+
+SST-2 provides a controlled environment for evaluating retrieval quality because downstream prediction accuracy is highly sensitive to which examples are retrieved into context. This makes it suitable for studying utility-based memory selection mechanisms.
+
+### Experimental Goal
+
+Given a query example and a memory pool:
+
+1. Retrieve the most useful memories.
+2. Construct a few-shot context.
+3. Evaluate downstream classification performance.
+4. Compare utility-based retrieval against traditional retrieval baselines.
+
+The benchmark serves as a controlled testbed for investigating whether memory utility can be predicted directly.
+
+---
 
 ## Research Timeline
 

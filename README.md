@@ -42,19 +42,22 @@ The report contains:
 ## Overview
 
 <p align="center">
-  <img src="assets/research_timeline.png" width="900">
+  <img src="assets/architecture.png" width="900">
 </p>
 
-Memory Utility Networks (MUN) investigates whether the future usefulness of memories can be predicted directly rather than approximated through traditional retrieval heuristics such as similarity, recency, or frequency.
+Memory Utility Networks (MUN) is a research investigation into utility-based memory retrieval for intelligent systems.
 
-The project spans thirteen research phases including architecture development, validation audits, reproducibility investigations, ablation studies, feature discovery, and final controlled evaluation.
+Rather than selecting memories using traditional heuristics such as similarity, recency, or frequency, MUN explores whether the future usefulness of a memory can be predicted directly.
 
-The investigation produced two major outcomes:
+### Research Outcomes
 
-- **MUN v1** demonstrated strong utility-aware retrieval performance under label-aware conditions.
-- **MUN v2** documented a reproducible negative result for label-free utility estimation.
+- **MUN v1:** Demonstrated strong utility-aware retrieval performance under label-aware conditions.
+- **MUN v2:** Established a documented negative result for label-free utility estimation.
+- **Validation Audits:** Confirmed experimental integrity and reproducibility.
+- **Feature Discovery:** Evaluated 17 candidate utility features and quantified their predictive value.
+- **Final Conclusion:** Utility-aware retrieval is promising, but label-free utility estimation remains an open research challenge.
 
-Together, these findings provide empirical evidence that utility-aware memory retrieval is promising, while also highlighting the limitations of current label-free approaches.
+This repository contains the complete research trail, including implementation artifacts, validation reports, ablation studies, reproducibility audits, experimental results, and the final technical report.
 
 ---
 ## Key Results

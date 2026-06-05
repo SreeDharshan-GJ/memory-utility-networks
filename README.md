@@ -186,7 +186,7 @@ PHASE 4 — FINAL VALIDATION & CONCLUSION           [Phase 13C.9]
 
 ## MUN v1: Label-Aware Neural Utility Estimation
 
-### Architecture
+### Detailed Architecture
 
 MUN v1 is a neural utility scorer that estimates the future usefulness of a memory given a query context. It is trained with a multi-component loss that captures ranking, contrastive separation, temporal dynamics, and contextual relevance.
 

@@ -22,18 +22,22 @@ The complete research report is available here:
 
 The report contains:
 
-- Complete methodology
-- MUN v1 architecture
-- MUN v2 development
-- Validation audits
-- Feature engineering studies
-- Reproducibility investigations
-- Statistical analysis
-- Final experimental findings
-- Future research directions
+* Complete methodology
+* MUN v1 architecture
+* MUN v2 development
+* Validation audits
+* Feature engineering studies
+* Reproducibility investigations
+* Statistical analysis
+* Final experimental findings
+* Future research directions
 
-- **Research Duration:** Phases 1–13
-- **Status:** Completed Investigation
+**Research Summary**
+
+* **Research Duration:** Phases 1–13
+* **Status:** Completed Investigation
+* **Outcome:** Positive result for label-aware retrieval (MUN v1); documented negative result for label-free utility estimation (MUN v2)
+
 
 ---
 ## Key Results

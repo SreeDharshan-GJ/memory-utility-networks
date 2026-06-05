@@ -306,78 +306,59 @@ The Phase 13C.9 final validation, conducted with explicit seed control, identica
 
 ## Repository Structure
 
-```
+```text
 memory-utility-networks/
 │
 ├── README.md
 ├── LICENSE
+├── CITATION.cff
+├── requirements.txt
+├── pyproject.toml
+├── .gitignore
 │
-├── assets/
-│   ├── mun_vs_baselines.png          # Figure 1: MUN vs all baselines
-│   ├── baseline_comparison.png       # Figure 2: Baseline comparison
-│   ├── ablation_results.png          # Figure 3: Ablation study
-│   └── research_timeline.png         # Figure 4: Research timeline
+├── train.py                    # Training pipeline
+├── evaluate.py                 # Evaluation framework
+├── benchmark.py                # Baseline benchmarking suite
 │
-├── models/
-│   ├── utilitynet_v1.py              # MUN v1: neural utility scorer
-│   ├── utilitynet_v2.py              # MUN v2: feature-based utility scorer
-│   └── utility_score_v21.py          # MUN v2.1: optimized weights
+├── models/                     # Memory Utility Network implementations
+│   ├── utilitynet_v1.py
+│   ├── utilitynet_v2.py
+│   └── utility_score_v21.py
 │
-├── phase12/
-│   ├── pilot_study.py
-│   ├── pilot_results.csv
-│   └── replication_study.py
+├── evaluation/                 # Experimental evaluation and validation
+│   ├── baseline_evaluation.py
+│   ├── controlled_evaluation.py
+│   ├── feature_ablation.py
+│   └── statistical_analysis.py
 │
-├── phase12d/
-│   └── validation_audit.py           # 7-question leakage + validity audit
+├── configs/                    # Experiment and model configurations
+│   ├── mun_v1.yaml
+│   ├── mun_v2.yaml
+│   └── experiment_configs.yaml
 │
-├── phase12e/
-│   └── label_ablation.py             # Label boost contribution study
+├── assets/                     # Figures and visualizations
+│   ├── mun_vs_baselines.png
+│   ├── baseline_comparison.png
+│   ├── ablation_study.png
+│   ├── research_timeline.png
+│   └── architecture_overview.png
 │
-├── phase13b5/
-│   ├── feature_discovery.py          # 17-feature correlation analysis
-│   └── feature_candidates.py
+├── docs/                       # Research reports and audit artifacts
+│   ├── PHASE_12D_VALIDATION_AUDIT.md
+│   ├── PHASE_12E_ABLATION_REPORT.md
+│   ├── PHASE_13B5_FEATURE_DISCOVERY_REPORT.md
+│   ├── PHASE_13B75_EMBEDDING_REPORT.md
+│   ├── PHASE_13C_IMPLEMENTATION_REPORT.md
+│   ├── PHASE_13C5_OPTIMIZATION_REPORT.md
+│   ├── PHASE_13C8_AUDIT_COMPLETION_REPORT.md
+│   ├── PHASE_13C8_AUDIT_SUMMARY.md
+│   ├── PHASE_13C8_REPRODUCIBILITY_REPORT.md
+│   └── PHASE_13C9_FINAL_VALIDATION_SUMMARY.md
 │
-├── phase13b75/
-│   └── embedding_validation.py       # Real vs random embedding study
-│
-├── phase13c/
-│   └── feature_based_utility_model.py
-│
-├── phase13c5/
-│   ├── weight_optimization.py        # 128 weight config grid search
-│   └── feature_ablation.py
-│
-├── phase13c75/
-│   └── mun_v21_eval.py
-│
-├── phase13c8/
-│   ├── dataset_comparison.py         # Reproducibility audit scripts
-│   ├── feature_consistency_check.py
-│   └── evaluation_consistency_check.py
-│
-├── phase13c9/
-│   ├── controlled_evaluation.py      # Final definitive experiment
-│   └── baseline_evaluation.py
-│
-├── data/
-│   ├── ablation_results.json
-│   └── statistical_analysis.json
-│
-└── docs/
-    ├── PHASE_12D_VALIDATION_AUDIT.md
-    ├── PHASE_12E_ABLATION_REPORT.md
-    ├── PHASE_13B5_FEATURE_DISCOVERY_REPORT.md
-    ├── PHASE_13B75_EMBEDDING_REPORT.md
-    ├── PHASE_13C_IMPLEMENTATION_REPORT.md
-    ├── PHASE_13C5_OPTIMIZATION_REPORT.md
-    ├── PHASE_13C8_AUDIT_COMPLETION_REPORT.md
-    ├── PHASE_13C8_AUDIT_SUMMARY.md
-    ├── PHASE_13C8_REPRODUCIBILITY_REPORT.md
-    └── PHASE_13C9_FINAL_VALIDATION_SUMMARY.md
+└── technical_report/
+    └── Memory_Utility_Networks_Technical_Report.pdf
 ```
 
----
 
 ## Research Artifacts
 

@@ -394,9 +394,8 @@ memory-utility-networks/
 │
 └── technical_report/
     └── Memory_Utility_Networks_Technical_Report.pdf
+
 ```
-
-
 ## Research Artifacts
 
 This repository contains a complete provenance trail across all experimental phases:
@@ -426,7 +425,6 @@ All primary experiments were evaluated across multiple seeds:
 789
 999
 ```
-
 ### Environment
 
 ```text
@@ -444,8 +442,9 @@ Scikit-Learn
 * Audited metric computation
 * Reproducibility validation (Phase 13C.8)
 * Independent final validation (Phase 13C.9)
-
+  
 Reproducibility was treated as a first-class research objective throughout the investigation.
+
 ---
 
 ## Research Contributions

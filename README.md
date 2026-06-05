@@ -413,6 +413,41 @@ This repository contains a complete provenance trail across all experimental pha
 | `PHASE_13C9_FINAL_VALIDATION_SUMMARY.md` | 13C.9 | Final controlled validation — definitive result |
 
 ---
+## Reproducibility
+
+### Random Seeds
+
+All primary experiments were evaluated across multiple seeds:
+
+```text
+42
+123
+456
+789
+999
+```
+
+### Environment
+
+```text
+Python 3.10+
+PyTorch
+Sentence Transformers
+NumPy
+Scikit-Learn
+```
+
+### Evaluation Principles
+
+* Fixed train/test partitions
+* Controlled random seeds
+* Audited metric computation
+* Reproducibility validation (Phase 13C.8)
+* Independent final validation (Phase 13C.9)
+
+Reproducibility was treated as a first-class research objective throughout the investigation.
+---
+
 ## Research Contributions
 
 This investigation contributes:

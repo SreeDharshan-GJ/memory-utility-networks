@@ -19,7 +19,7 @@
 
 The complete research report is available here:
 
-📘 **[Memory Utility Networks Technical Report](technical_report)**
+📘 **[Memory Utility Networks Technical Report](mun_tech_report.pdf)**
 
 The report contains:
 

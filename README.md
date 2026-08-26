@@ -559,12 +559,12 @@ If this work is useful to you, please cite it as:
 
 ## Authors
 
-**Sree Dharshan G J**
-SRM Institute of Science and Technology
+**Sree Dharshan G J**  
+SRM Institute of Science and Technology  
 Research interests: Memory-augmented AI systems, retrieval-augmented generation, efficient in-context learning, agent memory management.
 
-**Surya Narayanan Sivam**
-SRM Institute of Science and Technology
+**Surya Narayanan Sivam**  
+SRM Institute of Science and Technology  
 Research interests: Embedded systems, AI agents & autonomous systems, multi-agent systems, vector databases & embedding systems.
 
 ---

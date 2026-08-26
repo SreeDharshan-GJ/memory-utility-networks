@@ -545,7 +545,7 @@ If this work is useful to you, please cite it as:
 @techreport{dharshan2026mun,
   title     = {Memory Utility Networks: An Empirical Investigation of
                Utility-Based Memory Retrieval},
-  author    = {Dharshan G J, Sree},
+  author    = {Dharshan G J, Sree and Sivam, Surya Narayanan},
   institution = {SRM Institute of Science and Technology},
   year      = {2026},
   month     = {June},
@@ -557,7 +557,7 @@ If this work is useful to you, please cite it as:
 
 ---
 
-## Author
+## Authors
 
 **Sree Dharshan G J**
 SRM Institute of Science and Technology

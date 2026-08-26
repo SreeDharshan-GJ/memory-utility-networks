@@ -563,6 +563,10 @@ If this work is useful to you, please cite it as:
 SRM Institute of Science and Technology
 Research interests: Memory-augmented AI systems, retrieval-augmented generation, efficient in-context learning, agent memory management.
 
+**Surya Narayanan Sivam**
+SRM Institute of Science and Technology
+Research interests: Embedded systems, AI agents & autonomous systems, multi-agent systems, vector databases & embedding systems.
+
 ---
 
 ## Repository Resources
